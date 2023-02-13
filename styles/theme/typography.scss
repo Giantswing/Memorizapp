@@ -1,0 +1,93 @@
+/* TYPOGRAPHY */
+@use "sass:math";
+
+@function strip-unit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+
+  @if $u1 ==$u2 and $u1 ==$u3 and $u1 ==$u4 {
+    & {
+      font-size: $min-font-size;
+
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(
+          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+            ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+        );
+      }
+
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  }
+}
+
+/***************************************************************/
+
+$font--primary: var(--font-primary);
+$font--secondary: var(--font-secondary);
+
+@mixin side-menu-text() {
+  font-family: $font--secondary;
+  font-weight: 400;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 25px, 28px);
+}
+
+@mixin score-counter() {
+  font-family: $font--secondary;
+  font-weight: 400;
+  @include fluid-type($sm, $xl, 60px, 65px);
+}
+
+@mixin tendency_title() {
+  font-family: $font--primary;
+  font-weight: 400;
+  @include fluid-type($sm, $xl, 19px, 22px);
+}
+
+@mixin filter_selectable() {
+  font-family: $font--primary;
+  font-weight: 700;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 14px, 15px);
+}
+
+@mixin tendency_cost() {
+  font-family: $font--primary;
+  font-weight: 700;
+  @include fluid-type($sm, $xl, 17px, 20px);
+}
+
+@mixin tendency_duration() {
+  font-family: $font--primary;
+  font-weight: 400;
+  @include fluid-type($sm, $xl, 17px, 20px);
+}
+
+@mixin main_button() {
+  font-family: $font--primary;
+  font-weight: 300;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 20px, 22px);
+}
+
+@mixin secondary_button() {
+  font-family: $font--primary;
+  font-weight: 500;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 16px, 18px);
+}
+
+@mixin form-description() {
+  font-family: $font--primary;
+  font-weight: 500;
+  @include fluid-type($sm, $xl, 15px, 17px);
+}

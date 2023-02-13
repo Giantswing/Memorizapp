@@ -1,0 +1,343 @@
+/* GRID */
+@use "sass:math";
+
+$o-container__gutter: 40px !default;
+$o-container__gutter-single: $o-container__gutter * 0.5 !default;
+$container-max: 1240px + $o-container__gutter !default;
+
+$grid-gap: 24px !default;
+$grid-gap-smingle: $grid-gap * 0.5 !default;
+
+$spacer-unit: 8px !default;
+
+$-o-section-padding: 40px !default;
+$-o-section-padding-lg: 60px !default;
+
+$modal-container__xs-p-Y: 52px !default;
+$modal-container__xs-p-X: 16px !default;
+
+$modal-container__p-Y: 64px !default;
+$modal-container__p-X: 64px !default;
+
+$grid-fractions: (
+  "0": 0,
+  "1": math.div(1, 12),
+  "2": math.div(2, 12),
+  "3": math.div(3, 12),
+  "4": math.div(4, 12),
+  "5": math.div(5, 12),
+  "6": math.div(6, 12),
+  "7": math.div(7, 12),
+  "8": math.div(8, 12),
+  "9": math.div(9, 12),
+  "10": math.div(10, 12),
+  "11": math.div(11, 12),
+  "12": math.div(12, 12)
+) !default;
+
+@mixin container_sizes($min, $max) {
+  @for $i from $min through $max {
+    &--#{$i} {
+      max-width: math.div($container-max - $o-container__gutter, 12) * $i;
+    }
+  }
+}
+
+@function str-replace($string, $search, $replace) {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@mixin offsets($fractions) {
+  @each $key, $value in $fractions {
+    $modifier: str-replace($key, "/", "\\/");
+    $offset-value: (($value * 100) * 1%);
+
+    .u-#{$modifier} {
+      flex-basis: $offset-value;
+      max-width: $offset-value;
+    }
+
+    .u-offset-#{$modifier} {
+      margin-left: $offset-value;
+    }
+  }
+
+  @each $bp-key, $bp-value in $breakpoints {
+    @media (min-width: $bp-value) {
+      @each $key, $value in $fractions {
+        $modifier: str-replace($key, "/", "\\/");
+        $offset-value: (($value * 100) * 1%);
+
+        .u-#{$modifier}#{$breakpoint-class}#{$bp-key} {
+          flex-basis: $offset-value;
+          max-width: $offset-value;
+        }
+
+        .u-offset-#{$modifier}#{$breakpoint-class}#{$bp-key} {
+          margin-left: $offset-value;
+        }
+      }
+    }
+  }
+}
+
+@mixin hidden() {
+  .u-hide {
+    display: none !important;
+  }
+
+  @each $bp-key, $bp-value in $breakpoints {
+    @media (min-width: $bp-value) {
+      .u-hide#{$breakpoint-class}#{$bp-key} {
+        display: none !important;
+      }
+    }
+  }
+
+  @each $bp-key, $bp-value in $breakpoints-max {
+    @media (max-width: $bp-value) {
+      .u-hide#{$breakpoint-class}#{$bp-key} {
+        display: none !important;
+      }
+    }
+  }
+}
+
+@include hidden();
+
+.o-container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: $o-container__gutter-single;
+  padding-left: $o-container__gutter-single;
+  max-width: $container-max;
+  width: 100%;
+
+  &--fluid {
+    max-width: 100%;
+  }
+
+  &--nogutter {
+    padding-right: 0;
+    padding-left: 0;
+
+    &-mobile {
+      padding-right: 0;
+      padding-left: 0;
+
+      @media (min-width: $md) {
+        margin-left: auto;
+        margin-right: auto;
+        padding-right: $o-container__gutter-single;
+        padding-left: $o-container__gutter-single;
+        max-width: $container-max;
+        width: 100%;
+      }
+    }
+  }
+
+  &--addgutter-mobile {
+    @media (max-width: $xs-max) {
+      padding-right: $o-container__gutter-single !important;
+      padding-left: $o-container__gutter-single !important;
+    }
+  }
+
+  &--max-width-half {
+    padding-right: $o-container__gutter-single;
+    padding-left: $o-container__gutter-single;
+
+    @media (min-width: $md) {
+      max-width: ($container-max * 0.5);
+      width: 100%;
+    }
+
+    .o-container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  @include container_sizes(2, 11);
+
+  &--right {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  &-modal {
+    padding: rem($modal-container__xs-p-Y) rem($modal-container__xs-p-X);
+
+    @media (min-width: $sm) {
+      padding: rem($modal-container__p-Y) rem($modal-container__p-X);
+    }
+  }
+}
+
+.o-columns {
+  p,
+  li {
+    break-inside: avoid;
+  }
+
+  &--2 {
+    @media (min-width: $sm) {
+      column-gap: rem($grid-gap);
+      column-count: 2;
+    }
+  }
+
+  &--4 {
+    @media (min-width: $sm) {
+      column-gap: rem($grid-gap);
+      column-count: 2;
+    }
+    @media (min-width: $md) {
+      column-count: 3;
+    }
+    @media (min-width: $xl) {
+      column-count: 4;
+    }
+  }
+}
+
+.o-grid {
+  display: flex;
+  flex: 0 1 auto;
+  flex-flow: row wrap;
+  margin-left: -$grid-gap-smingle;
+  margin-right: -$grid-gap-smingle;
+
+  &--reverse {
+    flex-direction: row-reverse;
+
+    &\@md {
+      @media (min-width: $md) {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  &--between {
+    justify-content: space-between;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--align-center {
+    align-items: center;
+  }
+
+  &--wide {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &--no-gutters {
+    margin-left: 0;
+    margin-right: 0;
+
+    > .o-grid__col {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
+  // Temporal hasta que lo metamos en los mixin de resoluciones
+  &--xs-column {
+    @media (max-width: $xs-max) {
+      flex-direction: column;
+
+      &-reverse {
+        flex-direction: column-reverse;
+      }
+    }
+  }
+  &--block\@max-xs {
+    @media (max-width: $xs-max) {
+      display: block;
+    }
+  }
+
+  &--small-gutter {
+    margin-left: rem(math.div(-$grid-gap, 3));
+    margin-right: rem(math.div(-$grid-gap, 3));
+
+    .o-grid__col {
+      padding-left: rem(math.div($grid-gap, 3)) !important;
+      padding-right: rem(math.div($grid-gap, 3)) !important;
+    }
+  }
+
+  &__col {
+    flex: 0 0 auto;
+    max-width: 100%;
+    padding-left: rem($grid-gap-smingle);
+    padding-right: rem($grid-gap-smingle);
+
+    &--fill {
+      flex: 1;
+
+      &\@lg {
+        @media (min-width: $lg) {
+          flex: 1;
+        }
+      }
+    }
+
+    &--right {
+      margin-left: auto;
+    }
+
+    &--no-gutters {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+}
+
+.o-section {
+  padding-top: rem($-o-section-padding);
+  padding-bottom: rem($-o-section-padding);
+  flex-grow: 1;
+
+  @media (min-width: $md) {
+    padding-top: rem($-o-section-padding-lg);
+    padding-bottom: rem($-o-section-padding-lg);
+  }
+
+  &-center {
+    @extend .o-section;
+
+    text-align: center;
+  }
+
+  &-compact {
+    padding-top: rem(32px);
+    padding-bottom: rem(32px);
+
+    @media (min-width: $sm) {
+      padding-top: rem(40px);
+      padding-bottom: rem(40px);
+    }
+  }
+
+  &--top0 {
+    padding-top: 0;
+  }
+
+  &--bottom0 {
+    padding-bottom: 0;
+  }
+}
+
+@include offsets($grid-fractions);

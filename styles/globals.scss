@@ -1,0 +1,22 @@
+//THEME IMPORTS///////////////////
+@import "./theme/breakpoints.scss";
+@import "./theme/spacing.scss";
+@import "./theme/grid.scss";
+@import "./theme/typography.scss";
+@import "./theme/normalize.scss";
+@import "./theme/colors.scss";
+@import "./theme/utilities.scss";
+
+a {
+  text-decoration: none;
+}
+
+.App {
+  position: relative;
+  padding-top: 95px;
+}
+
+body {
+  font-family: $font--primary;
+  position: relative;
+}

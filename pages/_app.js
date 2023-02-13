@@ -13,11 +13,10 @@ const font_secondary = Space_Grotesk({
   variable: "--font-secondary",
 });
 
+import "/styles/components/rich-text.css";
 import styles from "/styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
-  const [currentUser, setCurrentUser] = useState("alex");
-
   return (
     <main className={`${font_primary.variable} ${font_secondary.variable}`}>
       <Component {...pageProps} />

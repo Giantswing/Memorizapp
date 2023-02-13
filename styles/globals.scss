@@ -7,15 +7,25 @@
 @import "./theme/colors.scss";
 @import "./theme/utilities.scss";
 
+@import "/styles/components/c-app-header.scss";
+@import "/styles/components/c-button.scss";
+
 a {
   text-decoration: none;
 }
 
 .App {
   position: relative;
+  padding-top: 95px;
+  font-family: $font--primary !important;
 }
 
-body {
-  font-family: $font--primary;
-  position: relative;
+.RichEditor-editor {
+  font-family: $font--primary !important;
+}
+
+.RichEditor-controls {
+  font-family: $font--primary !important;
+  font-size: 20px;
+  font-weight: bold;
 }

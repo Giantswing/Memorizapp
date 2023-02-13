@@ -1,0 +1,40 @@
+.app-header {
+  background-color: $darker-gray;
+  padding: 15px 20px !important;
+  color: white;
+  margin-bottom: $gap-sm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+
+  h1 {
+    margin: 0;
+  }
+
+  &__options {
+    display: flex;
+    align-items: center;
+    gap: $gap-sm;
+
+    &__delete-input {
+      @include secondary_button;
+      background-color: transparent;
+      border: 2px solid white;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: $gap-sm;
+      padding: 10px 20px;
+
+      input {
+        background-color: transparent;
+        border: none !important;
+        width: 80px;
+        color: white;
+      }
+    }
+  }
+}

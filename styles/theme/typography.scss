@@ -34,49 +34,11 @@
 $font--primary: var(--font-primary);
 $font--secondary: var(--font-secondary);
 
-@mixin side-menu-text() {
-  font-family: $font--secondary;
+@mixin input-delete() {
+  font-family: $font--primary;
   font-weight: 400;
   text-transform: uppercase;
   @include fluid-type($sm, $xl, 25px, 28px);
-}
-
-@mixin score-counter() {
-  font-family: $font--secondary;
-  font-weight: 400;
-  @include fluid-type($sm, $xl, 60px, 65px);
-}
-
-@mixin tendency_title() {
-  font-family: $font--primary;
-  font-weight: 400;
-  @include fluid-type($sm, $xl, 19px, 22px);
-}
-
-@mixin filter_selectable() {
-  font-family: $font--primary;
-  font-weight: 700;
-  text-transform: uppercase;
-  @include fluid-type($sm, $xl, 14px, 15px);
-}
-
-@mixin tendency_cost() {
-  font-family: $font--primary;
-  font-weight: 700;
-  @include fluid-type($sm, $xl, 17px, 20px);
-}
-
-@mixin tendency_duration() {
-  font-family: $font--primary;
-  font-weight: 400;
-  @include fluid-type($sm, $xl, 17px, 20px);
-}
-
-@mixin main_button() {
-  font-family: $font--primary;
-  font-weight: 300;
-  text-transform: uppercase;
-  @include fluid-type($sm, $xl, 20px, 22px);
 }
 
 @mixin secondary_button() {
@@ -84,10 +46,4 @@ $font--secondary: var(--font-secondary);
   font-weight: 500;
   text-transform: uppercase;
   @include fluid-type($sm, $xl, 16px, 18px);
-}
-
-@mixin form-description() {
-  font-family: $font--primary;
-  font-weight: 500;
-  @include fluid-type($sm, $xl, 15px, 17px);
 }

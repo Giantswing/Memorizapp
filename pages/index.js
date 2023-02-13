@@ -1,23 +1,31 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "@next/font/google";
-import AppHeader from "/components/appHeader";
+import AppHeader from "/components/AppHeader";
 
-const inter = Inter({ subsets: ["latin"] });
+import dynamic from "next/dynamic";
+const TextEditor = dynamic(() => import("/components/TextEditor"), {
+  ssr: false,
+});
 
+const RTETextEditor = dynamic(() => import("/components/RTETextEditor"), {
+  ssr: false,
+});
 function Home() {
+  const [content, setContent] = useState("");
+
   return (
     <div className="App">
       <Head>
         <title>Memorizapp</title>
+        <meta charset="utf-8" />
       </Head>
 
       <AppHeader />
 
       <main className="o-container">
-        <h1>Memorizapp</h1>
-        <p>Memorizapp3</p>
+        <h2>Introduce debajo el texto a memorizar:</h2>
+        <RTETextEditor setContent={setContent} />
       </main>
     </div>
   );

@@ -13,7 +13,6 @@ const font_secondary = Space_Grotesk({
   variable: "--font-secondary",
 });
 
-import "/styles/components/rich-text.css";
 import styles from "/styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {

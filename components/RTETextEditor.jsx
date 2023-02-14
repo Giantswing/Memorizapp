@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import { useEffect } from "react";
+
 import {
   Editor,
   EditorState,
@@ -17,7 +19,7 @@ import "draft-js/dist/Draft.css";
 import BlockStyleControls from "./BlockStyleControls";
 import InlineStyleControls from "./InlineStyleControls";
 
-const RTEditor = ({ setContent }) => {
+const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
   const editorRef = useRef(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -39,9 +41,20 @@ const RTEditor = ({ setContent }) => {
     }
   };
 
+  useEffect(() => {
+    if (updateText === true && content !== null) {
+      let newState = convertFromRaw(content);
+      let newEditorState = EditorState.createWithContent(newState);
+      setEditorState(newEditorState);
+      setUpdateText(false);
+    }
+  }, [updateText]);
+
   const onChange = (state) => {
     setEditorState(state);
     setContent(convertToRaw(state.getCurrentContent()));
+    //reset the content
+    //setContent({ blocks: [], entityMap: {} });
   };
 
   const mapKeyToEditorCommand = (e) => {
@@ -73,30 +86,36 @@ const RTEditor = ({ setContent }) => {
   };
 
   return (
-    <div className="RichEditor-root">
-      <BlockStyleControls
-        editorState={editorState}
-        onToggle={toggleBlockType}
-      />
-      <InlineStyleControls
-        editorState={editorState}
-        onToggle={toggleInlineStyle}
-      />
-
-      <div className="RichEditor-editor">
-        <Editor
-          ref={editorRef}
-          editorState={editorState}
-          placeholder="Escribe el tema que quieres memorizar..."
-          customStyleMap={styleMap}
-          blockStyleFn={(block) => getBlockStyle(block)}
-          keyBindingFn={(e) => mapKeyToEditorCommand(e)}
-          onChange={onChange}
-          spellCheck={true}
-          handleKeyCommand={handleKeyCommand}
-        />
+    <>
+      <div className="RichEditor-control-parent">
+        <div className="o-container">
+          <BlockStyleControls
+            editorState={editorState}
+            onToggle={toggleBlockType}
+          />
+          <InlineStyleControls
+            editorState={editorState}
+            onToggle={toggleInlineStyle}
+          />
+        </div>
       </div>
-    </div>
+
+      <div className="RichEditor-root">
+        <div className="RichEditor-editor">
+          <Editor
+            ref={editorRef}
+            editorState={editorState}
+            placeholder="Escribe el tema que quieres memorizar..."
+            customStyleMap={styleMap}
+            blockStyleFn={(block) => getBlockStyle(block)}
+            keyBindingFn={(e) => mapKeyToEditorCommand(e)}
+            onChange={onChange}
+            spellCheck={true}
+            handleKeyCommand={handleKeyCommand}
+          />
+        </div>
+      </div>
+    </>
   );
 };
 

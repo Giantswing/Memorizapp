@@ -1,3 +1,7 @@
+$header-height: 75px;
+$options-height: 85px;
+$input-radius: 10px;
+
 //THEME IMPORTS///////////////////
 @import "./theme/breakpoints.scss";
 @import "./theme/spacing.scss";
@@ -7,6 +11,7 @@
 @import "./theme/colors.scss";
 @import "./theme/utilities.scss";
 
+@import "/styles/components/rich-text.scss";
 @import "/styles/components/c-app-header.scss";
 @import "/styles/components/c-button.scss";
 
@@ -16,8 +21,9 @@ a {
 
 .App {
   position: relative;
-  padding-top: 95px;
+  padding-top: calc($header-height + $options-height + 15px);
   font-family: $font--primary !important;
+  padding-bottom: 150px;
 }
 
 .RichEditor-editor {

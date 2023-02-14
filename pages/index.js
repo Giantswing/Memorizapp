@@ -4,28 +4,82 @@ import Image from "next/image";
 import AppHeader from "/components/AppHeader";
 
 import dynamic from "next/dynamic";
-const TextEditor = dynamic(() => import("/components/TextEditor"), {
-  ssr: false,
-});
 
 const RTETextEditor = dynamic(() => import("/components/RTETextEditor"), {
   ssr: false,
 });
 function Home() {
   const [content, setContent] = useState("");
+  const [savedContent, setSavedContent] = useState({
+    blocks: [
+      {
+        key: "e6dsf",
+        text: "",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  });
+  const [deletePercent, setDeletePercent] = useState(45);
+  const [updateText, setUpdateText] = useState(false);
+
+  function CallbackUpdateText() {
+    setUpdateText(true);
+  }
+
+  function UpdateSavedContent() {
+    setSavedContent(content);
+    console.log("saved content updated");
+  }
+
+  function RestoreSavedContent() {
+    setContent(savedContent);
+    const restoredSavedContent = JSON.parse(JSON.stringify(savedContent));
+    setSavedContent(restoredSavedContent);
+    setUpdateText(true);
+  }
+
+  function ShowSavedContent() {
+    console.log(savedContent);
+  }
+
+  function ClearContent() {
+    //clear blocks
+    setContent({ blocks: [], entityMap: {} });
+    setUpdateText(true);
+  }
 
   return (
     <div className="App">
       <Head>
         <title>Memorizapp</title>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
       </Head>
 
-      <AppHeader />
+      <AppHeader
+        CallbackUpdateText={CallbackUpdateText}
+        content={content}
+        setContent={setContent}
+        deletePercent={deletePercent}
+        setDeletePercent={setDeletePercent}
+        saveContentCallback={UpdateSavedContent}
+        savedContent={savedContent}
+        setSavedContent={setSavedContent}
+        restoreSavedContentCallback={RestoreSavedContent}
+      />
 
       <main className="o-container">
         <h2>Introduce debajo el texto a memorizar:</h2>
-        <RTETextEditor setContent={setContent} />
+        <RTETextEditor
+          updateText={updateText}
+          setUpdateText={setUpdateText}
+          setContent={setContent}
+          content={content}
+        />
       </main>
     </div>
   );

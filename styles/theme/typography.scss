@@ -43,7 +43,7 @@ $font--secondary: var(--font-secondary);
 
 @mixin secondary_button() {
   font-family: $font--primary;
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
-  @include fluid-type($sm, $xl, 16px, 18px);
+  @include fluid-type($sm, $xl, 14px, 14px);
 }

@@ -10,10 +10,8 @@ function HideButton({
 }) {
   function HideContent() {
     var newContent;
-    console.log(savedContent);
 
     if (savedContent.blocks[0].text === "") {
-      console.log("content is empty");
       const restoredSavedContent = JSON.parse(JSON.stringify(content));
       setSavedContent(restoredSavedContent);
       newContent = content.blocks;
@@ -32,7 +30,8 @@ function HideButton({
         //deletePercent / 100
         if (Math.random() < deletePercent / 100) {
           if (j > 0 && j < paragraphWords.length - 1)
-            paragraphWords[j] = "_".repeat(paragraphWords[j].length);
+            //paragraphWords[j] = "_".repeat(paragraphWords[j].length);
+            paragraphWords[j] = "____";
         }
 
         newContent[i].text = paragraphWords.join(" ");

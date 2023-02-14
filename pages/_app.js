@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Roboto_Condensed } from "@next/font/google";
+import { Roboto } from "@next/font/google";
 import { Space_Grotesk } from "@next/font/google";
 
-const font_primary = Roboto_Condensed({
+const font_primary = Roboto({
   subsets: ["latin"],
   variable: "--font-primary",
   weight: ["300", "400", "700"],

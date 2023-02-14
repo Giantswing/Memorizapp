@@ -59,11 +59,8 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
 
   const mapKeyToEditorCommand = (e) => {
     if (e.keyCode === 9 /* TAB */) {
-      const newEditorState = RichUtils.onTab(e, editorState, 4 /* maxDepth */);
-      if (newEditorState !== editorState) {
-        onChange(newEditorState);
-      }
-      return null;
+      SkipGap();
+      e.preventDefault();
     }
     return getDefaultKeyBinding(e);
   };
@@ -84,6 +81,108 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
   const toggleInlineStyle = (inlineStyle) => {
     onChange(RichUtils.toggleInlineStyle(editorState, inlineStyle));
   };
+
+  function SkipGap(currentBlock = null) {
+    const currentSelection = editorState.getSelection();
+
+    if (currentBlock === null) {
+      currentBlock = editorState
+        .getCurrentContent()
+        .getBlockForKey(currentSelection.getStartKey());
+    } else {
+      console.log("aaa");
+      currentBlock = editorState
+        .getCurrentContent()
+        .getBlockForKey(currentBlock.getKey());
+    }
+
+    const currentBlockText = currentBlock.getText();
+    const currentBlockKey = currentBlock.getKey();
+
+    const currentBlockLength = currentBlock.getLength();
+    const currentBlockSelection = currentSelection.getAnchorOffset();
+
+    let nextUnderscorePosition = currentBlockText.indexOf(
+      "_",
+      currentBlockSelection
+    );
+
+    if (currentSelection.getAnchorOffset() === nextUnderscorePosition) {
+      nextUnderscorePosition = currentBlockText.indexOf(
+        "_",
+        currentSelection.getAnchorOffset() + 4
+      );
+      moveToNextUnderscore(currentSelection, nextUnderscorePosition);
+    }
+
+    if (nextUnderscorePosition !== -1) {
+      moveToNextUnderscore(currentSelection, nextUnderscorePosition);
+    } else {
+      //if there are more blocks, move to the next block
+      const nextBlock = editorState
+        .getCurrentContent()
+        .getBlockAfter(currentBlockKey);
+
+      if (nextBlock) {
+        //move selection to the first character of the next block
+        const newSelection = currentSelection.merge({
+          anchorKey: nextBlock.getKey(),
+          anchorOffset: 0,
+          focusKey: nextBlock.getKey(),
+          focusOffset: 0,
+        });
+
+        const newEditorState = EditorState.forceSelection(
+          editorState,
+          newSelection
+        );
+
+        onChange(newEditorState);
+      } else {
+        const firstBlock = editorState
+          .getCurrentContent()
+          .getFirstBlock()
+          .getKey();
+        const newSelection = currentSelection.merge({
+          anchorKey: firstBlock,
+          anchorOffset: 0,
+          focusKey: firstBlock,
+          focusOffset: 0,
+        });
+
+        const newEditorState = EditorState.forceSelection(
+          editorState,
+          newSelection
+        );
+
+        onChange(newEditorState);
+      }
+    }
+  }
+
+  function moveToNextUnderscore(currentSelection, nextUnderscorePosition) {
+    const newSelection = currentSelection.merge({
+      anchorOffset: nextUnderscorePosition,
+      focusOffset: nextUnderscorePosition + 4,
+    });
+
+    const newEditorState = EditorState.forceSelection(
+      editorState,
+      newSelection
+    );
+
+    onChange(newEditorState);
+  }
+
+  function selectUntilNextUnderscore(currentSelection, nextUnderscorePosition) {
+    var startingPosition = currentSelection.getAnchorOffset();
+    var length = 0;
+    var nextCharacter;
+
+    while (nextCharacter !== "_") {
+      nextCharacter = currentSelection.getAnchorOffset() + 1;
+    }
+  }
 
   return (
     <>

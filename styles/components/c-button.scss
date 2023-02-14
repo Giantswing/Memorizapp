@@ -9,6 +9,17 @@
   border-radius: $input-radius;
   transition: 0.05s;
 
+  &--floating {
+    position: fixed;
+    bottom: 25px;
+    right: 2%;
+    width: fit-content;
+    padding: 15px 30px;
+    border-radius: 0;
+    z-index: 10;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+
   &:hover {
     background-color: $main-blue-dark;
     color: white;

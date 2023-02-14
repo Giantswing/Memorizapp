@@ -12,13 +12,27 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+$vertical-distance: 37px;
+
 .RichEditor-root {
+  position: relative;
   background: #fff;
   border: 1px solid black;
   border-radius: 6px;
   font-family: "Georgia", serif;
   font-size: 16px;
   padding: 15px;
+}
+
+.RichEditor-root::after {
+  //display line on the left like a margin
+  content: "";
+  position: absolute;
+  left: $vertical-distance;
+  top: $vertical-distance;
+  bottom: calc($vertical-distance + 10px);
+  width: 1px;
+  background-color: $main-blue;
 }
 
 .RichEditor-control-parent {
@@ -42,7 +56,8 @@
 .RichEditor-editor {
   cursor: text;
   font-size: 18px;
-  padding-bottom: 50px;
+  line-height: 125%;
+  padding-bottom: $vertical-distance;
 }
 
 .RichEditor-editor .public-DraftEditorPlaceholder-root,
@@ -90,4 +105,10 @@
 
 .RichEditor-activeButton {
   color: #5890ff;
+}
+
+::selection {
+  background-color: $pastel-purple;
+  color: $dark-gray;
+  caret-color: #5890ff;
 }

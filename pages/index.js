@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import ScrollToTopButton from "/components/ScrollToTopButton";
 import AppHeader from "/components/AppHeader";
 
 import dynamic from "next/dynamic";
@@ -74,6 +75,9 @@ function Home() {
 
       <main className="o-container">
         <h2>Introduce debajo el texto a memorizar:</h2>
+        <h4 className="input-description">
+          Usa la tecla Tabulador (Tab) para moverte y seleccionar los huecos
+        </h4>
         <RTETextEditor
           updateText={updateText}
           setUpdateText={setUpdateText}
@@ -81,6 +85,8 @@ function Home() {
           content={content}
         />
       </main>
+
+      <ScrollToTopButton />
     </div>
   );
 }

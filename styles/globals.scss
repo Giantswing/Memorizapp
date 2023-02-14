@@ -24,6 +24,12 @@ a {
   padding-top: calc($header-height + $options-height + 15px);
   font-family: $font--primary !important;
   padding-bottom: 150px;
+
+  .input-description {
+    color: $main-blue;
+    font-size: 17px;
+    font-weight: 600;
+  }
 }
 
 .RichEditor-editor {

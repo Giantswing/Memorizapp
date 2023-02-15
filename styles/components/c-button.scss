@@ -8,6 +8,24 @@
   border-width: 0;
   border-radius: $input-radius;
   transition: 0.05s;
+  position: relative;
+
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.55);
+    color: white;
+    padding: 5px 13px;
+    border-radius: 777px;
+    text-align: center;
+    left: 50%;
+    width: max-content;
+    transform: translate(-50%, -30px);
+    opacity: 0;
+    text-shadow: 0 0 1px black;
+    pointer-events: none;
+    transition: 0.1s;
+  }
 
   &--floating {
     background-color: white;
@@ -25,14 +43,22 @@
     background-color: $main-blue;
     color: white;
     border: none;
-
-    //show the data-tooltip
-
-    &[data-tooltip] {
-      &::after {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
   }
+
+  &:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -35px);
+  }
+
+  &::before:empty {
+    display: none;
+  }
+
+  &[data-tooltip=""]:before {
+    display: none;
+  }
+}
+
+[data-tooltip=""]:before {
+  display: none;
 }

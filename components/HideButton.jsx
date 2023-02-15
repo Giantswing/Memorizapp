@@ -63,16 +63,15 @@ function HideButton({
   }
 
   return (
-    <div data-tooltip="yea">
-      <button
-        className="c-button"
-        onClick={() => {
-          HideContent();
-        }}
-      >
-        Ocultar
-      </button>
-    </div>
+    <button
+      className="c-button"
+      data-tooltip="Ocultar el numero de palabras especificado"
+      onClick={() => {
+        HideContent();
+      }}
+    >
+      Ocultar
+    </button>
   );
 }
 

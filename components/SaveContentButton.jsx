@@ -5,6 +5,7 @@ function SaveContentButton({ saveContentCallback }) {
     <div>
       <button
         className="c-button"
+        data-tooltip="Guardar el texto actual"
         onClick={() => {
           saveContentCallback();
         }}

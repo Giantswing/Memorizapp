@@ -32,7 +32,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
     },
     UNDERSCORES: {
       color: "black",
-      borderBottom: "1px solid #3a6db0",
+      borderBottom: "1px solid #a3c9e8",
       borderRadius: "2px",
       transition: "all 0.5s ease",
     },

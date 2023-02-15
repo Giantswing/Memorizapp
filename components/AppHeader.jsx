@@ -21,7 +21,9 @@ function AppHeader({
   return (
     <header className="app-header o-container o-container--fluid">
       <div className="o-container">
-        <h1>Memorizapp v{version}</h1>
+        <h1>
+          Memorizapp <span>v{version}</span>
+        </h1>
       </div>
     </header>
   );

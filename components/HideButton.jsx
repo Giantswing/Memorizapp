@@ -35,16 +35,26 @@ function HideButton({
 
     for (var i = 0; i < newContent.length; i++) {
       paragraphWords = newContent[i].text.split(" ");
+      var currentOffset = 0;
       for (var j = 0; j < paragraphWords.length; j++) {
         //deletePercent / 100
         if (Math.random() < deletePercent / 100) {
-          if (j > 0 && j < paragraphWords.length - 1)
-            paragraphWords[j] = "_".repeat(paragraphWords[j].length);
-          //paragraphWords[j] = "____";
+          if (j > 0 && j < paragraphWords.length - 1) {
+            paragraphWords[j] = "  ".repeat(paragraphWords[j].length);
+
+            var wordLength = paragraphWords[j].length;
+            newContent[i].inlineStyleRanges.push({
+              offset: currentOffset,
+              length: wordLength,
+              style: "UNDERSCORES",
+            });
+          }
         }
 
-        newContent[i].text = paragraphWords.join(" ");
+        currentOffset += paragraphWords[j].length + 1;
       }
+
+      newContent[i].text = paragraphWords.join(" ");
     }
 
     setContent({ blocks: newContent, entityMap: {} });

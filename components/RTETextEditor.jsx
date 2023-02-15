@@ -30,6 +30,12 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
       fontSize: 16,
       padding: 2,
     },
+    UNDERSCORES: {
+      color: "black",
+      borderBottom: "1px solid #3a6db0",
+      borderRadius: "2px",
+      transition: "all 0.5s ease",
+    },
   };
 
   const getBlockStyle = (block) => {
@@ -53,8 +59,6 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
   const onChange = (state) => {
     setEditorState(state);
     setContent(convertToRaw(state.getCurrentContent()));
-    //reset the content
-    //setContent({ blocks: [], entityMap: {} });
   };
 
   const mapKeyToEditorCommand = (e) => {
@@ -104,7 +108,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
 
     //get the next underscore position
     let nextUnderscorePosition = currentBlockText.indexOf(
-      "_",
+      " ",
       currentBlockSelection
     );
     console.log(nextUnderscorePosition);
@@ -120,10 +124,10 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
             nextUnderscorePosition + underscore_length
           );
           underscore_length++;
-        } while (currentLetter === "_" || currentLetter === " ");
+        } while (currentLetter === " " || currentLetter === " ");
 
         nextUnderscorePosition = currentBlockText.indexOf(
-          "_",
+          " ",
           currentBlockSelection + underscore_length - 2
         );
 
@@ -140,7 +144,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
           nextUnderscorePosition + underscore_length
         );
         underscore_length++;
-      } while (currentLetter === "_" || currentLetter === " ");
+      } while (currentLetter === " " || currentLetter === " ");
 
       CreateSelection(
         currentSelection,

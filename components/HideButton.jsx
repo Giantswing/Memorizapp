@@ -40,7 +40,7 @@ function HideButton({
         //deletePercent / 100
         if (Math.random() < deletePercent / 100) {
           if (j > 0 && j < paragraphWords.length - 1) {
-            paragraphWords[j] = "  ".repeat(paragraphWords[j].length);
+            paragraphWords[j] = " ".repeat(paragraphWords[j].length);
 
             var wordLength = paragraphWords[j].length;
             newContent[i].inlineStyleRanges.push({

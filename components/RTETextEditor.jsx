@@ -108,7 +108,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
 
     //get the next underscore position
     let nextUnderscorePosition = currentBlockText.indexOf(
-      " ",
+      " ",
       currentBlockSelection
     );
     console.log(nextUnderscorePosition);
@@ -124,10 +124,10 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
             nextUnderscorePosition + underscore_length
           );
           underscore_length++;
-        } while (currentLetter === " " || currentLetter === " ");
+        } while (currentLetter === " " || currentLetter === " ");
 
         nextUnderscorePosition = currentBlockText.indexOf(
-          " ",
+          " ",
           currentBlockSelection + underscore_length - 2
         );
 
@@ -144,7 +144,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
           nextUnderscorePosition + underscore_length
         );
         underscore_length++;
-      } while (currentLetter === " " || currentLetter === " ");
+      } while (currentLetter === " " || currentLetter === " ");
 
       CreateSelection(
         currentSelection,

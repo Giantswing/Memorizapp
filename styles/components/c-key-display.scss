@@ -1,0 +1,14 @@
+.c-key-display {
+  font-weight: 300;
+  border: 1px solid $main-blue;
+  padding: 3px 7px;
+  margin: 0 5px;
+  border-radius: 3px;
+}
+
+.input-description {
+  @include menu-items;
+  color: $main-blue;
+  font-size: 15px;
+  font-weight: 600;
+}

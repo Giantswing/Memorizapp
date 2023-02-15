@@ -88,7 +88,8 @@ function Home() {
 
       <main className="o-container">
         <h4 className="input-description">
-          Usa la tecla Tabulador (Tab) para moverte y seleccionar los huecos
+          Usa la tecla <span className="c-key-display">Tab</span> para moverte y
+          seleccionar los huecos
         </h4>
         <RTETextEditor
           updateText={updateText}

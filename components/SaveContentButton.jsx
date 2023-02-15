@@ -9,7 +9,7 @@ function SaveContentButton({ saveContentCallback }) {
           saveContentCallback();
         }}
       >
-        Guardar Texto
+        Guardar
       </button>
     </div>
   );

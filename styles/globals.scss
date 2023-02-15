@@ -17,6 +17,7 @@ $input-radius: 0;
 @import "/styles/components/c-button.scss";
 @import "/styles/components/c-delete-input.scss";
 @import "/styles/components/c-options.scss";
+@import "/styles/components/c-key-display.scss";
 
 a {
   text-decoration: none;
@@ -32,7 +33,7 @@ a {
 
   .input-description {
     color: $main-blue;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 600;
   }
 }
@@ -42,7 +43,6 @@ a {
 }
 
 .RichEditor-controls {
-  font-family: $font--primary !important;
   font-size: 20px;
   font-weight: bold;
 }

@@ -4,7 +4,7 @@ function RestoreContentButton(props) {
       className="c-button"
       onClick={() => props.restoreSavedContentCallback()}
     >
-      Restaurar Texto
+      Restaurar
     </button>
   );
 }

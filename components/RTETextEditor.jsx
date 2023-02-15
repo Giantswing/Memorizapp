@@ -102,86 +102,105 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
     const currentBlockLength = currentBlock.getLength();
     const currentBlockSelection = currentSelection.getAnchorOffset();
 
+    //get the next underscore position
     let nextUnderscorePosition = currentBlockText.indexOf(
       "_",
       currentBlockSelection
     );
-
-    if (currentSelection.getAnchorOffset() === nextUnderscorePosition) {
-      nextUnderscorePosition = currentBlockText.indexOf(
-        "_",
-        currentSelection.getAnchorOffset() + 4
-      );
-      moveToNextUnderscore(currentSelection, nextUnderscorePosition);
-    }
+    console.log(nextUnderscorePosition);
 
     if (nextUnderscorePosition !== -1) {
-      moveToNextUnderscore(currentSelection, nextUnderscorePosition);
-    } else {
-      //if there are more blocks, move to the next block
-      const nextBlock = editorState
-        .getCurrentContent()
-        .getBlockAfter(currentBlockKey);
+      //if there is an underscore in this block, move to it
 
-      if (nextBlock) {
-        //move selection to the first character of the next block
-        const newSelection = currentSelection.merge({
-          anchorKey: nextBlock.getKey(),
-          anchorOffset: 0,
-          focusKey: nextBlock.getKey(),
-          focusOffset: 0,
-        });
+      if (currentBlockSelection === nextUnderscorePosition) {
+        var underscore_length = 0;
+        var currentLetter;
+        do {
+          currentLetter = currentBlockText.charAt(
+            nextUnderscorePosition + underscore_length
+          );
+          underscore_length++;
+        } while (currentLetter === "_" || currentLetter === " ");
 
-        const newEditorState = EditorState.forceSelection(
-          editorState,
-          newSelection
+        nextUnderscorePosition = currentBlockText.indexOf(
+          "_",
+          currentBlockSelection + underscore_length - 2
         );
 
-        onChange(newEditorState);
-      } else {
-        const firstBlock = editorState
-          .getCurrentContent()
-          .getFirstBlock()
-          .getKey();
-        const newSelection = currentSelection.merge({
-          anchorKey: firstBlock,
-          anchorOffset: 0,
-          focusKey: firstBlock,
-          focusOffset: 0,
-        });
-
-        const newEditorState = EditorState.forceSelection(
-          editorState,
-          newSelection
-        );
-
-        onChange(newEditorState);
+        if (nextUnderscorePosition === -1) {
+          CheckInOtherBlocks(currentBlockKey, currentSelection);
+          return;
+        }
       }
+
+      var underscore_length = 0;
+      var currentLetter;
+      do {
+        currentLetter = currentBlockText.charAt(
+          nextUnderscorePosition + underscore_length
+        );
+        underscore_length++;
+      } while (currentLetter === "_" || currentLetter === " ");
+
+      CreateSelection(
+        currentSelection,
+        nextUnderscorePosition,
+        nextUnderscorePosition + underscore_length - 2
+      );
+    } else {
+      CheckInOtherBlocks(currentBlockKey, currentSelection);
     }
   }
 
-  function moveToNextUnderscore(currentSelection, nextUnderscorePosition) {
+  function CheckInOtherBlocks(currentBlockKey, currentSelection) {
+    //if there is no underscore in this block then
+    //if there are more blocks, move to the next block
+    const nextBlock = editorState
+      .getCurrentContent()
+      .getBlockAfter(currentBlockKey);
+
+    if (nextBlock) {
+      CreateSelection(
+        currentSelection,
+        0,
+        0,
+        nextBlock.getKey(),
+        nextBlock.getKey()
+      );
+    } else {
+      //else if there are no more blocks, move back to the first block
+      const firstBlock = editorState
+        .getCurrentContent()
+        .getFirstBlock()
+        .getKey();
+
+      CreateSelection(currentSelection, 0, 0, firstBlock, firstBlock);
+    }
+  }
+  function CreateSelection(
+    currentSelection,
+    start,
+    end,
+    anchorKey = null,
+    focusKey = null
+  ) {
     const newSelection = currentSelection.merge({
-      anchorOffset: nextUnderscorePosition,
-      focusOffset: nextUnderscorePosition + 4,
+      anchorOffset: start,
+      focusOffset: end,
+      anchorKey: anchorKey ? anchorKey : currentSelection.getAnchorKey(),
+      focusKey: focusKey ? focusKey : currentSelection.getFocusKey(),
     });
 
+    SaveNewSelection(newSelection);
+  }
+
+  function SaveNewSelection(newSelection) {
     const newEditorState = EditorState.forceSelection(
       editorState,
       newSelection
     );
 
     onChange(newEditorState);
-  }
-
-  function selectUntilNextUnderscore(currentSelection, nextUnderscorePosition) {
-    var startingPosition = currentSelection.getAnchorOffset();
-    var length = 0;
-    var nextCharacter;
-
-    while (nextCharacter !== "_") {
-      nextCharacter = currentSelection.getAnchorOffset() + 1;
-    }
   }
 
   return (

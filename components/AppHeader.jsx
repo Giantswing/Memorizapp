@@ -17,12 +17,11 @@ function AppHeader({
 
   restoreSavedContentCallback,
 }) {
+  const { version } = require("/package.json");
   return (
     <header className="app-header o-container o-container--fluid">
       <div className="o-container">
-        <div className="o-grid o-grid--between">
-          <h1 className="o-grid__col u-2">Memorizapp</h1>
-        </div>
+        <h1>Memorizapp v{version}</h1>
       </div>
     </header>
   );

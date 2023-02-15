@@ -3,7 +3,7 @@ function RestoreContentButton(props) {
     <button
       className="c-button"
       data-tooltip="Restaurar texto guardado previamente"
-      onClick={() => props.restoreSavedContentCallback()}
+      onClick={() => props.RestoreSavedContent()}
     >
       Restaurar
     </button>

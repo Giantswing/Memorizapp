@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-function SaveContentButton({ saveContentCallback }) {
+function SaveContentButton(props) {
   return (
     <div>
       <button
         className="c-button"
         data-tooltip="Guardar el texto actual"
         onClick={() => {
-          saveContentCallback();
+          props.UpdateSavedContent();
         }}
       >
         Guardar

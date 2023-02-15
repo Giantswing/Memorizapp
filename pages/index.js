@@ -45,14 +45,14 @@ function Home() {
     setUpdateText(true);
   }
 
-  function ShowSavedContent() {
-    console.log(savedContent);
-  }
-
   function ClearContent() {
     //clear blocks
     setContent({ blocks: [], entityMap: {} });
     setUpdateText(true);
+  }
+
+  function CompareContent() {
+    console.log("comparing content");
   }
 
   return (
@@ -62,28 +62,21 @@ function Home() {
         <meta charSet="utf-8" />
       </Head>
 
-      <AppHeader
-        CallbackUpdateText={CallbackUpdateText}
-        content={content}
-        setContent={setContent}
-        deletePercent={deletePercent}
-        setDeletePercent={setDeletePercent}
-        saveContentCallback={UpdateSavedContent}
-        savedContent={savedContent}
-        setSavedContent={setSavedContent}
-        restoreSavedContentCallback={RestoreSavedContent}
-      />
+      <AppHeader />
 
       <OptionsHeader
-        CallbackUpdateText={CallbackUpdateText}
-        content={content}
-        setContent={setContent}
-        deletePercent={deletePercent}
-        setDeletePercent={setDeletePercent}
-        saveContentCallback={UpdateSavedContent}
-        savedContent={savedContent}
-        setSavedContent={setSavedContent}
-        restoreSavedContentCallback={RestoreSavedContent}
+        {...{
+          CallbackUpdateText,
+          content,
+          setContent,
+          deletePercent,
+          setDeletePercent,
+          UpdateSavedContent,
+          savedContent,
+          setSavedContent,
+          RestoreSavedContent,
+          CompareContent,
+        }}
       />
 
       <main className="o-container">

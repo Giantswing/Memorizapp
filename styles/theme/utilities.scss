@@ -21,3 +21,8 @@
 .u-m-b-lg {
   margin-bottom: $gap-lg;
 }
+
+.u-barely-visible {
+  pointer-events: none;
+  opacity: 0.2;
+}

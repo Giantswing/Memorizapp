@@ -12,6 +12,7 @@
   height: $header-height;
 
   h1 {
+    @include main-logo;
     margin: 0;
     padding-top: 5px;
   }

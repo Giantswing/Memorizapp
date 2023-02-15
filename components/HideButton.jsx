@@ -10,6 +10,15 @@ function HideButton({
 }) {
   function HideContent() {
     var newContent;
+    //check if content exists
+
+    if (
+      !content ||
+      !content.blocks ||
+      !content.blocks[0] ||
+      !content.blocks[0].text
+    )
+      return;
 
     if (savedContent.blocks[0].text === "") {
       const restoredSavedContent = JSON.parse(JSON.stringify(content));
@@ -44,14 +53,14 @@ function HideButton({
   }
 
   return (
-    <div>
+    <div data-tooltip="yea">
       <button
         className="c-button"
         onClick={() => {
           HideContent();
         }}
       >
-        Ocultar {deletePercent}%
+        Ocultar
       </button>
     </div>
   );

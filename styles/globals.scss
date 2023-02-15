@@ -1,6 +1,7 @@
-$header-height: 75px;
-$options-height: 85px;
-$input-radius: 10px;
+$header-height: 35px;
+$styling-height: 45px;
+$options-height: 45px;
+$input-radius: 0;
 
 //THEME IMPORTS///////////////////
 @import "./theme/breakpoints.scss";
@@ -14,6 +15,8 @@ $input-radius: 10px;
 @import "/styles/components/rich-text.scss";
 @import "/styles/components/c-app-header.scss";
 @import "/styles/components/c-button.scss";
+@import "/styles/components/c-delete-input.scss";
+@import "/styles/components/c-options.scss";
 
 a {
   text-decoration: none;
@@ -21,9 +24,11 @@ a {
 
 .App {
   position: relative;
-  padding-top: calc($header-height + $options-height + 15px);
+  padding-top: calc($header-height + $styling-height + $options-height + 15px);
   font-family: $font--primary !important;
   padding-bottom: 150px;
+  background-color: $background-color;
+  min-height: 100vh;
 
   .input-description {
     color: $main-blue;

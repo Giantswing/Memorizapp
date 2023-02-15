@@ -17,13 +17,13 @@ $vertical-distance: 37px;
 .RichEditor-root {
   position: relative;
   background: #fff;
-  border: 1px solid black;
-  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-height: 70vh;
   font-family: "Georgia", serif;
   font-size: 16px;
-  padding: 15px;
+  padding: 35px 25px;
 }
-
+/*
 .RichEditor-root::after {
   //display line on the left like a margin
   content: "";
@@ -35,21 +35,27 @@ $vertical-distance: 37px;
   background-color: $main-blue;
 }
 
+*/
+
 .RichEditor-control-parent {
   position: fixed;
   background-color: white;
-  top: calc($header-height + 15px);
-  height: $options-height;
-  border-radius: 0 $input-radius $input-radius 0;
-  border: 1px solid lightgray;
+  top: calc($options-height + $header-height);
+  height: $styling-height;
+  background-color: $menu-background;
+  left: 0;
+  width: 100%;
   padding: 10px 20px;
   z-index: 5;
-  display: flex;
-  align-items: center;
-  border-left: 2px solid white;
+  border-bottom: 1px solid lightgray;
 
   .o-container {
-    padding: 0;
+    display: flex;
+    gap: 30px;
+
+    span {
+      @include menu-items;
+    }
   }
 }
 
@@ -89,7 +95,7 @@ $vertical-distance: 37px;
 }
 
 .RichEditor-controls {
-  font-size: 14px;
+  @include menu-items;
   margin-bottom: 5px;
   user-select: none;
 }
@@ -100,7 +106,6 @@ $vertical-distance: 37px;
   margin-right: 16px;
   padding: 2px 0;
   display: inline-block;
-  font-size: 18px !important;
 }
 
 .RichEditor-activeButton {

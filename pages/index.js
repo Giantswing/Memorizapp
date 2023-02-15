@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import ScrollToTopButton from "/components/ScrollToTopButton";
 import AppHeader from "/components/AppHeader";
+import OptionsHeader from "/components/OptionsHeader";
 
 import dynamic from "next/dynamic";
 
@@ -73,8 +74,19 @@ function Home() {
         restoreSavedContentCallback={RestoreSavedContent}
       />
 
+      <OptionsHeader
+        CallbackUpdateText={CallbackUpdateText}
+        content={content}
+        setContent={setContent}
+        deletePercent={deletePercent}
+        setDeletePercent={setDeletePercent}
+        saveContentCallback={UpdateSavedContent}
+        savedContent={savedContent}
+        setSavedContent={setSavedContent}
+        restoreSavedContentCallback={RestoreSavedContent}
+      />
+
       <main className="o-container">
-        <h2>Introduce debajo el texto a memorizar:</h2>
         <h4 className="input-description">
           Usa la tecla Tabulador (Tab) para moverte y seleccionar los huecos
         </h4>

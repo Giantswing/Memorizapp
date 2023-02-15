@@ -186,7 +186,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
 
   return (
     <>
-      <div className="RichEditor-control-parent">
+      <div className="RichEditor-control-parent o-container o-container--fluid">
         <div className="o-container">
           <BlockStyleControls
             editorState={editorState}

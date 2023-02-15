@@ -42,8 +42,22 @@ $font--secondary: var(--font-secondary);
 }
 
 @mixin secondary_button() {
-  font-family: $font--primary;
-  font-weight: 700;
+  font-family: $font--secondary;
+  font-weight: 00;
+
+  @include fluid-type($sm, $xl, 15px, 15px);
+}
+
+@mixin main-logo() {
+  font-family: $font--secondary;
+  font-weight: 600;
   text-transform: uppercase;
+  @include fluid-type($sm, $xl, 19px, 19px);
+}
+
+@mixin menu-items() {
+  font-family: $font--secondary;
+  font-weight: 600;
+
   @include fluid-type($sm, $xl, 14px, 14px);
 }

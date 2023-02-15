@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Roboto } from "@next/font/google";
-import { Space_Grotesk } from "@next/font/google";
+import { Lato } from "@next/font/google";
 
 const font_primary = Roboto({
   subsets: ["latin"],
@@ -8,9 +8,10 @@ const font_primary = Roboto({
   weight: ["300", "400", "700"],
 });
 
-const font_secondary = Space_Grotesk({
+const font_secondary = Lato({
   subsets: ["latin"],
   variable: "--font-secondary",
+  weight: ["300", "400", "700"],
 });
 
 import styles from "/styles/globals.scss";

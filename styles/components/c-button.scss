@@ -1,8 +1,8 @@
 .c-button {
   @include secondary_button;
-  background-color: white;
+  background-color: transparent;
   color: black;
-  padding: 10px 20px;
+  padding: 5px 12px;
   cursor: pointer;
   width: 100%;
   border-width: 0;
@@ -10,6 +10,7 @@
   transition: 0.05s;
 
   &--floating {
+    background-color: white;
     position: fixed;
     bottom: 25px;
     right: 2%;
@@ -17,11 +18,21 @@
     padding: 15px 30px;
     border-radius: 0;
     z-index: 10;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid black;
   }
 
   &:hover {
-    background-color: $main-blue-dark;
+    background-color: $main-blue;
     color: white;
+    border: none;
+
+    //show the data-tooltip
+
+    &[data-tooltip] {
+      &::after {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
   }
 }

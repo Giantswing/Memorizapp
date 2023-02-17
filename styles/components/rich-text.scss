@@ -45,7 +45,7 @@ $vertical-distance: 37px;
   left: 0;
   width: 100%;
   padding: 10px 20px;
-  z-index: 5;
+  z-index: 11;
   border-bottom: 1px solid lightgray;
   border-top: 1px solid #eee;
   padding-top: 8px;
@@ -67,7 +67,7 @@ $vertical-distance: 37px;
 
   &--floating {
     position: absolute;
-    z-index: 150;
+    z-index: 10;
     color: transparent;
     transform: translateY(-25px);
     pointer-events: none;

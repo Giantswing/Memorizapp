@@ -1,6 +1,6 @@
 {
   "name": "memorizapp",
-  "version": "0.1.6",
+  "version": "0.1.6b",
   "private": true,
   "scripts": {
     "dev": "next dev",

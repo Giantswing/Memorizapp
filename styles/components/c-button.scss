@@ -11,9 +11,8 @@
   position: relative;
 
   &--toggle {
-    background-color: $main-blue;
-    color: white;
-    border: none;
+    outline: 2px solid $main-blue;
+    outline-offset: -2px;
   }
 
   &::before {

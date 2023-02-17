@@ -11,7 +11,7 @@ function OptionsHeader(props) {
       <div className="o-container">
         <HidePercentInput {...props} />
         <HideButton {...props} />
-        <span class="u-barely-visible">|</span>
+        <span className="u-barely-visible">|</span>
         <SaveContentButton {...props} />
         <RestoreContentButton {...props} />
         <CompareButton {...props} />

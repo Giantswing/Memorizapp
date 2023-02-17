@@ -61,3 +61,11 @@ $font--secondary: var(--font-secondary);
 
   @include fluid-type($sm, $xl, 14px, 14px);
 }
+
+@mixin editor-text() {
+  font-family: $font--primary;
+  font-weight: 500;
+  line-height: 180%;
+  letter-spacing: -0.4px;
+  font-size: 15px;
+}

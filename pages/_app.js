@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Roboto } from "@next/font/google";
+import { Fira_Mono } from "@next/font/google";
 import { Lato } from "@next/font/google";
 
-const font_primary = Roboto({
+const font_primary = Fira_Mono({
   subsets: ["latin"],
   variable: "--font-primary",
-  weight: ["300", "400", "700"],
+  weight: ["400", "500", "700"],
 });
 
 const font_secondary = Lato({

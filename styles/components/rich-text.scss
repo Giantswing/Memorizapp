@@ -62,9 +62,23 @@ $vertical-distance: 37px;
 
 .RichEditor-editor {
   cursor: text;
-  font-size: 18px;
-  line-height: 125%;
   padding-bottom: $vertical-distance;
+  @include editor-text;
+
+  &--floating {
+    position: absolute;
+    z-index: 150;
+    color: transparent;
+    transform: translateY(-25px);
+    pointer-events: none;
+    transition: 0.1s;
+
+    //color: red !important;
+  }
+
+  &--editing {
+    line-height: 400%;
+  }
 }
 
 .RichEditor-editor .public-DraftEditorPlaceholder-root,

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 
 function HideButton({
   CallbackUpdateText,
@@ -7,10 +8,12 @@ function HideButton({
   deletePercent,
   savedContent,
   setSavedContent,
+  hiddenContent,
+  setHiddenContent,
 }) {
   function HideContent() {
-    var newContent;
     //check if content exists
+    var backupContent, newContent;
 
     if (
       !content ||
@@ -21,14 +24,18 @@ function HideButton({
       return;
 
     if (savedContent.blocks[0].text === "") {
-      const restoredSavedContent = JSON.parse(JSON.stringify(content));
-      setSavedContent(restoredSavedContent);
+      const auxContentBackup1 = JSON.parse(JSON.stringify(content));
+      const auxContentBackup2 = JSON.parse(JSON.stringify(content));
+      setSavedContent(auxContentBackup1);
       newContent = content.blocks;
+      backupContent = auxContentBackup2.blocks;
     } else {
       setContent(savedContent);
-      const restoredSavedContent = JSON.parse(JSON.stringify(savedContent));
-      setSavedContent(restoredSavedContent);
+      const auxContentBackup1 = JSON.parse(JSON.stringify(savedContent));
+      const auxContentBackup2 = JSON.parse(JSON.stringify(savedContent));
+      setSavedContent(auxContentBackup1);
       newContent = savedContent.blocks;
+      backupContent = auxContentBackup2.blocks;
     }
 
     var paragraphWords = [];
@@ -40,10 +47,18 @@ function HideButton({
         //deletePercent / 100
         if (Math.random() < deletePercent / 100) {
           if (j > 0 && j < paragraphWords.length - 1) {
-            paragraphWords[j] = " ".repeat(paragraphWords[j].length);
+            //AddHiddenWord(newContent[i].key, currentOffset, paragraphWords[j]);
+
+            paragraphWords[j] = " ".repeat(paragraphWords[j].length);
 
             var wordLength = paragraphWords[j].length;
             newContent[i].inlineStyleRanges.push({
+              offset: currentOffset,
+              length: wordLength,
+              style: "UNDERSCORES",
+            });
+
+            backupContent[i].inlineStyleRanges.push({
               offset: currentOffset,
               length: wordLength,
               style: "UNDERSCORES",
@@ -57,10 +72,20 @@ function HideButton({
       newContent[i].text = paragraphWords.join(" ");
     }
 
+    setHiddenContent({ blocks: backupContent, entityMap: {} });
     setContent({ blocks: newContent, entityMap: {} });
 
     CallbackUpdateText();
   }
+
+  /*
+  function AddHiddenWord(blockKey, position, word) {
+    setHiddenContent((hiddenContent) => [
+      ...hiddenContent,
+      { blockKey: blockKey, position: position, word: word },
+    ]);
+  }
+  */
 
   return (
     <button

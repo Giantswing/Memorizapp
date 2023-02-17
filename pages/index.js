@@ -4,6 +4,7 @@ import Image from "next/image";
 import ScrollToTopButton from "/components/ScrollToTopButton";
 import AppHeader from "/components/AppHeader";
 import OptionsHeader from "/components/OptionsHeader";
+import HiddenWordsDisplay from "/components/HiddenWordsDisplay";
 
 import dynamic from "next/dynamic";
 
@@ -26,8 +27,35 @@ function Home() {
     ],
     entityMap: {},
   });
+
+  const [hiddenContent, setHiddenContent] = useState({
+    blocks: [
+      {
+        key: "e6dsf",
+        text: "",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  });
+
   const [deletePercent, setDeletePercent] = useState(45);
   const [updateText, setUpdateText] = useState(false);
+  /*
+  const [hiddenContent, setHiddenContent] = useState([
+    {
+      blockKey: "",
+      position: 0,
+      word: "",
+    },
+  ]);
+  J*/
+
+  const [showHiddenContent, setShowHiddenContent] = useState(false);
 
   function CallbackUpdateText() {
     setUpdateText(true);
@@ -43,6 +71,12 @@ function Home() {
     const restoredSavedContent = JSON.parse(JSON.stringify(savedContent));
     setSavedContent(restoredSavedContent);
     setUpdateText(true);
+
+    if (showHiddenContent) {
+      setShowHiddenContent(!showHiddenContent);
+    }
+
+    setHiddenContent({ blocks: [], entityMap: {} });
   }
 
   function ClearContent() {
@@ -52,7 +86,11 @@ function Home() {
   }
 
   function CompareContent() {
-    console.log("comparing content");
+    //toggle show hidden words
+
+    if (hiddenContent.blocks.length != 0) {
+      setShowHiddenContent(!showHiddenContent);
+    }
   }
 
   return (
@@ -76,6 +114,9 @@ function Home() {
           setSavedContent,
           RestoreSavedContent,
           CompareContent,
+          setHiddenContent,
+          hiddenContent,
+          showHiddenContent,
         }}
       />
 
@@ -89,6 +130,9 @@ function Home() {
           setUpdateText={setUpdateText}
           setContent={setContent}
           content={content}
+          savedContent={savedContent}
+          showHiddenContent={showHiddenContent}
+          hiddenContent={hiddenContent}
         />
       </main>
 

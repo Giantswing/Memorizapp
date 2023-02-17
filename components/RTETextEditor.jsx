@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useEffect } from "react";
+import HiddenWordsDisplay from "./HiddenWordsDisplay";
 
 import {
   Editor,
@@ -19,9 +20,22 @@ import "draft-js/dist/Draft.css";
 import BlockStyleControls from "./BlockStyleControls";
 import InlineStyleControls from "./InlineStyleControls";
 
-const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
+const RTEditor = ({
+  updateText,
+  setUpdateText,
+  content,
+  setContent,
+  savedContent,
+  showHiddenContent,
+  hiddenContent,
+}) => {
   const editorRef = useRef(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const hiddenEditorRef = useRef(null);
+  const [hiddenEditorState, setHiddenEditorState] = useState(
+    EditorState.createEmpty()
+  );
 
   const styleMap = {
     CODE: {
@@ -33,10 +47,31 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
     UNDERSCORES: {
       color: "black",
       borderBottom: "1px solid #a3c9e8",
-      borderRadius: "2px",
+
       transition: "all 0.5s ease",
     },
   };
+
+  const hiddenStyleMap = {
+    UNDERSCORES: {
+      color: "white",
+      backgroundColor: "rgba(0, 0, 0, 0.45)",
+      transition: "all 0.5s ease",
+      outline: "3px solid rgba(0, 0, 0, 0.45)",
+      borderRadius: "3px",
+      top: "0",
+    },
+  };
+
+  useEffect(() => {
+    //grab content from savedContent and put it in the hiddenEditor
+    if (hiddenContent !== null) {
+      let newState = convertFromRaw(hiddenContent);
+      let newEditorState = EditorState.createWithContent(newState);
+
+      setHiddenEditorState(newEditorState);
+    }
+  }, [hiddenContent]);
 
   const getBlockStyle = (block) => {
     switch (block.getType()) {
@@ -94,7 +129,6 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
         .getCurrentContent()
         .getBlockForKey(currentSelection.getStartKey());
     } else {
-      console.log("aaa");
       currentBlock = editorState
         .getCurrentContent()
         .getBlockForKey(currentBlock.getKey());
@@ -108,7 +142,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
 
     //get the next underscore position
     let nextUnderscorePosition = currentBlockText.indexOf(
-      " ",
+      " ",
       currentBlockSelection
     );
     console.log(nextUnderscorePosition);
@@ -124,10 +158,10 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
             nextUnderscorePosition + underscore_length
           );
           underscore_length++;
-        } while (currentLetter === " " || currentLetter === " ");
+        } while (currentLetter === " " || currentLetter === " ");
 
         nextUnderscorePosition = currentBlockText.indexOf(
-          " ",
+          " ",
           currentBlockSelection + underscore_length - 2
         );
 
@@ -144,7 +178,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
           nextUnderscorePosition + underscore_length
         );
         underscore_length++;
-      } while (currentLetter === " " || currentLetter === " ");
+      } while (currentLetter === " " || currentLetter === " ");
 
       CreateSelection(
         currentSelection,
@@ -207,8 +241,63 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
     onChange(newEditorState);
   }
 
+  function PrintEditor() {
+    return (
+      <>
+        <div
+          className={`RichEditor-editor--floating RichEditor-editor ${
+            showHiddenContent ? "RichEditor-editor--editing" : ""
+          }  `}
+        >
+          {showHiddenContent && (
+            <Editor
+              ref={hiddenEditorRef}
+              editorState={hiddenEditorState}
+              placeholder="Escribe el tema que quieres memorizar..."
+              blockStyleFn={(block) => getBlockStyle(block)}
+              keyBindingFn={(e) => mapKeyToEditorCommand(e)}
+              onChange={onChange}
+              spellCheck={true}
+              handleKeyCommand={handleKeyCommand}
+              customStyleMap={hiddenStyleMap}
+            />
+          )}
+        </div>
+
+        <div
+          className={`RichEditor-editor ${
+            showHiddenContent ? "RichEditor-editor--editing" : ""
+          }  `}
+        >
+          <Editor
+            ref={editorRef}
+            editorState={editorState}
+            placeholder="Escribe el tema que quieres memorizar..."
+            blockStyleFn={(block) => getBlockStyle(block)}
+            keyBindingFn={(e) => mapKeyToEditorCommand(e)}
+            onChange={onChange}
+            spellCheck={true}
+            handleKeyCommand={handleKeyCommand}
+            customStyleMap={styleMap}
+          />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
+      {/*
+      <HiddenWordsDisplay
+        editorState={editorState}
+        editorRef={editorRef}
+        content={content}
+        savedContent={savedContent}
+        showHiddenContent={showHiddenContent}
+      />
+
+    */}
+
       <div className="RichEditor-control-parent o-container o-container--fluid">
         <div className="o-container">
           <BlockStyleControls
@@ -222,21 +311,7 @@ const RTEditor = ({ updateText, setUpdateText, content, setContent }) => {
         </div>
       </div>
 
-      <div className="RichEditor-root">
-        <div className="RichEditor-editor">
-          <Editor
-            ref={editorRef}
-            editorState={editorState}
-            placeholder="Escribe el tema que quieres memorizar..."
-            customStyleMap={styleMap}
-            blockStyleFn={(block) => getBlockStyle(block)}
-            keyBindingFn={(e) => mapKeyToEditorCommand(e)}
-            onChange={onChange}
-            spellCheck={true}
-            handleKeyCommand={handleKeyCommand}
-          />
-        </div>
-      </div>
+      <div className="RichEditor-root">{PrintEditor()}</div>
     </>
   );
 };

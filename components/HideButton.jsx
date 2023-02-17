@@ -11,6 +11,8 @@ function HideButton({
   hiddenContent,
   setHiddenContent,
 }) {
+  var actualHiddenWords = [];
+
   function HideContent() {
     //check if content exists
     var backupContent, newContent;
@@ -39,6 +41,7 @@ function HideButton({
     }
 
     var paragraphWords = [];
+    actualHiddenWords = [];
 
     for (var i = 0; i < newContent.length; i++) {
       paragraphWords = newContent[i].text.split(" ");
@@ -49,7 +52,10 @@ function HideButton({
           if (j > 0 && j < paragraphWords.length - 1) {
             //AddHiddenWord(newContent[i].key, currentOffset, paragraphWords[j]);
 
-            paragraphWords[j] = " ".repeat(paragraphWords[j].length);
+            //add the word to the array of hidden words
+            actualHiddenWords.push(paragraphWords[j]);
+
+            paragraphWords[j] = " ".repeat(paragraphWords[j].length);
 
             var wordLength = paragraphWords[j].length;
             newContent[i].inlineStyleRanges.push({
@@ -76,16 +82,28 @@ function HideButton({
     setContent({ blocks: newContent, entityMap: {} });
 
     CallbackUpdateText();
+
+    AddHiddenTooltips();
   }
 
-  /*
-  function AddHiddenWord(blockKey, position, word) {
-    setHiddenContent((hiddenContent) => [
-      ...hiddenContent,
-      { blockKey: blockKey, position: position, word: word },
-    ]);
+  function AddHiddenTooltips() {
+    //wait for the content to be rendered
+    setTimeout(() => {
+      var spans = document.querySelectorAll("span[data-offset-key]");
+      var hidden = 0;
+      for (var i = 0; i < spans.length; i++) {
+        //remove the tooltip if it exists
+        if (spans[i].getAttribute("data-tooltip")) {
+          spans[i].removeAttribute("data-tooltip");
+        }
+        //if the span has a border-bottom style, add the tooltip
+        if (spans[i].style.borderBottom) {
+          spans[i].setAttribute("data-tooltip", actualHiddenWords[hidden]);
+          hidden++;
+        }
+      }
+    }, 100);
   }
-  */
 
   return (
     <button

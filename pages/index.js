@@ -45,15 +45,6 @@ function Home() {
 
   const [deletePercent, setDeletePercent] = useState(45);
   const [updateText, setUpdateText] = useState(false);
-  /*
-  const [hiddenContent, setHiddenContent] = useState([
-    {
-      blockKey: "",
-      position: 0,
-      word: "",
-    },
-  ]);
-  J*/
 
   const [showHiddenContent, setShowHiddenContent] = useState(false);
 
@@ -92,6 +83,25 @@ function Home() {
       setShowHiddenContent(!showHiddenContent);
     }
   }
+
+  useEffect(() => {
+    //go through all the spans and add the class c-hidden-word if they have data-tooltip
+    //wait for the content to be updated
+    const allspans = document.querySelectorAll("span");
+    allspans.forEach((span) => {
+      //remove the class c-hidden-word if it exists
+      span.classList.remove("c-hidden-word");
+    });
+
+    setTimeout(() => {
+      const spans = document.querySelectorAll("span[data-tooltip]");
+      spans.forEach((span) => {
+        if (showHiddenContent) {
+          span.classList.add("c-hidden-word");
+        }
+      });
+    }, 100);
+  }, [showHiddenContent, hiddenContent, content]);
 
   return (
     <div className="App">

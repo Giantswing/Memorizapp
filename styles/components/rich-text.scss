@@ -64,6 +64,23 @@ $vertical-distance: 37px;
   cursor: text;
   padding-bottom: $vertical-distance;
   @include editor-text;
+  transition: 0.1s;
+
+  .c-hidden-word {
+    position: relative;
+
+    &::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      opacity: 1;
+      color: $main-blue;
+
+      font-size: 17px;
+      left: 50%;
+      transform: translate(-50%, -25px);
+      text-align: center;
+    }
+  }
 
   &--floating {
     position: absolute;
@@ -71,13 +88,12 @@ $vertical-distance: 37px;
     color: transparent;
     transform: translateY(-25px);
     pointer-events: none;
-    transition: 0.1s;
 
     //color: red !important;
   }
 
   &--editing {
-    line-height: 400%;
+    line-height: 300%;
   }
 }
 

@@ -65,7 +65,7 @@ $font--secondary: var(--font-secondary);
 @mixin editor-text() {
   font-family: $font--primary;
   font-weight: 500;
-  line-height: 180%;
-  letter-spacing: -0.4px;
-  font-size: 15px;
+  line-height: 130%;
+
+  font-size: 20px;
 }

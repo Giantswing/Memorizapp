@@ -38,16 +38,10 @@ const RTEditor = ({
   );
 
   const styleMap = {
-    CODE: {
-      backgroundColor: "rgba(0, 0, 0, 0.05)",
-      fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-      fontSize: 16,
-      padding: 2,
-    },
     UNDERSCORES: {
       color: "black",
-      borderBottom: "1px solid #a3c9e8",
-
+      borderBottom: "2px solid #a3c9e8",
+      borderRadius: "3px",
       transition: "all 0.5s ease",
     },
   };
@@ -142,7 +136,7 @@ const RTEditor = ({
 
     //get the next underscore position
     let nextUnderscorePosition = currentBlockText.indexOf(
-      " ",
+      " ",
       currentBlockSelection
     );
     console.log(nextUnderscorePosition);
@@ -158,7 +152,7 @@ const RTEditor = ({
             nextUnderscorePosition + underscore_length
           );
           underscore_length++;
-        } while (currentLetter === " " || currentLetter === " ");
+        } while (currentLetter === " " || currentLetter === " ");
 
         nextUnderscorePosition = currentBlockText.indexOf(
           " ",
@@ -178,7 +172,7 @@ const RTEditor = ({
           nextUnderscorePosition + underscore_length
         );
         underscore_length++;
-      } while (currentLetter === " " || currentLetter === " ");
+      } while (currentLetter === " " || currentLetter === " ");
 
       CreateSelection(
         currentSelection,
@@ -244,6 +238,7 @@ const RTEditor = ({
   function PrintEditor() {
     return (
       <>
+        {/*}
         <div
           className={`RichEditor-editor--floating RichEditor-editor ${
             showHiddenContent ? "RichEditor-editor--editing" : ""
@@ -263,6 +258,7 @@ const RTEditor = ({
             />
           )}
         </div>
+        */}
 
         <div
           className={`RichEditor-editor ${

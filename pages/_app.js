@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Fira_Mono } from "@next/font/google";
+import { Oswald } from "@next/font/google";
 import { Lato } from "@next/font/google";
 
-const font_primary = Fira_Mono({
+const font_primary = Oswald({
   subsets: ["latin"],
   variable: "--font-primary",
   weight: ["400", "500", "700"],

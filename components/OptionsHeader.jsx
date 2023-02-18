@@ -4,6 +4,7 @@ import SaveContentButton from "components/SaveContentButton";
 import HidePercentInput from "components/HidePercentInput";
 import RestoreContentButton from "components/RestoreContentButton";
 import CompareButton from "/components/CompareButton";
+import InputCheckbox from "/components/InputCheckbox";
 
 function OptionsHeader(props) {
   return (
@@ -11,6 +12,8 @@ function OptionsHeader(props) {
       <div className="o-container">
         <HidePercentInput {...props} />
         <HideButton {...props} />
+        <InputCheckbox {...props} />
+
         <span className="u-barely-visible">|</span>
         <SaveContentButton {...props} />
         <RestoreContentButton {...props} />

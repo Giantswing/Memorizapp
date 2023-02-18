@@ -6,6 +6,14 @@ import AppHeader from "/components/AppHeader";
 import OptionsHeader from "/components/OptionsHeader";
 import HiddenWordsDisplay from "/components/HiddenWordsDisplay";
 
+import HidePercentInput from "/components/HidePercentInput";
+import HideButton from "/components/HideButton";
+import InputCheckbox from "/components/InputCheckbox";
+import SaveContentButton from "/components/SaveContentButton";
+import RestoreContentButton from "/components/RestoreContentButton";
+import CompareButton from "/components/CompareButton";
+import DropdownMenu from "/components/DropdownMenu";
+
 import dynamic from "next/dynamic";
 
 const RTETextEditor = dynamic(() => import("/components/RTETextEditor"), {
@@ -48,6 +56,19 @@ function Home() {
 
   const [showHiddenContent, setShowHiddenContent] = useState(false);
 
+  const [hideOptions, setHideOptions] = useState([
+    {
+      title: "hideFirstAndLast",
+      description: "No ocultar la primera y última palabra de cada párrafo",
+      value: true,
+    },
+    {
+      title: "hideShortWords",
+      description: "Ocultar palabras cortas (menos de 3 letras)",
+      value: false,
+    },
+  ]);
+
   function CallbackUpdateText() {
     setUpdateText(true);
   }
@@ -84,12 +105,50 @@ function Home() {
     }
   }
 
+  function OptionsHeader() {
+    return (
+      <div className="c-options o-container o-container--fluid">
+        <div className="o-container">
+          <HidePercentInput {...{ deletePercent, setDeletePercent }} />
+          <HideButton
+            {...{
+              CallbackUpdateText,
+              content,
+              setContent,
+              deletePercent,
+              savedContent,
+              setSavedContent,
+              setHiddenContent,
+              hideOptions,
+            }}
+          />
+          <DropdownMenu title="Opciones">
+            <InputCheckbox
+              title="hideFirstAndLast"
+              hideOptions={hideOptions}
+              setHideOptions={setHideOptions}
+            />
+            <InputCheckbox
+              title="hideShortWords"
+              hideOptions={hideOptions}
+              setHideOptions={setHideOptions}
+            />
+          </DropdownMenu>
+
+          <span className="u-barely-visible">|</span>
+          <SaveContentButton {...{ UpdateSavedContent }} />
+          <RestoreContentButton {...{ RestoreSavedContent }} />
+          <CompareButton
+            {...{ showHiddenContent, hiddenContent, CompareContent }}
+          />
+        </div>
+      </div>
+    );
+  }
+
   useEffect(() => {
-    //go through all the spans and add the class c-hidden-word if they have data-tooltip
-    //wait for the content to be updated
     const allspans = document.querySelectorAll("span");
     allspans.forEach((span) => {
-      //remove the class c-hidden-word if it exists
       span.classList.remove("c-hidden-word");
     });
 
@@ -112,23 +171,7 @@ function Home() {
 
       <AppHeader />
 
-      <OptionsHeader
-        {...{
-          CallbackUpdateText,
-          content,
-          setContent,
-          deletePercent,
-          setDeletePercent,
-          UpdateSavedContent,
-          savedContent,
-          setSavedContent,
-          RestoreSavedContent,
-          CompareContent,
-          setHiddenContent,
-          hiddenContent,
-          showHiddenContent,
-        }}
-      />
+      {OptionsHeader()}
 
       <main className="o-container">
         <h4 className="input-description">

@@ -8,10 +8,30 @@ function HideButton({
   deletePercent,
   savedContent,
   setSavedContent,
-  hiddenContent,
   setHiddenContent,
+  hideOptions,
 }) {
   var actualHiddenWords = [];
+
+  function HideConditions(wordIndex, paragraphWords) {
+    var hideCurrentWord = false;
+
+    if (Math.random() < deletePercent / 100) hideCurrentWord = true;
+    else hideCurrentWord = false;
+
+    if (
+      hideOptions[0].value == true &&
+      (wordIndex === 0 || wordIndex === paragraphWords.length - 1)
+    )
+      hideCurrentWord = false;
+
+    if (hideCurrentWord == true) {
+      if (hideOptions[1].value == false && paragraphWords[wordIndex].length < 3)
+        hideCurrentWord = false;
+    }
+
+    return hideCurrentWord;
+  }
 
   function HideContent() {
     //check if content exists
@@ -47,29 +67,25 @@ function HideButton({
       paragraphWords = newContent[i].text.split(" ");
       var currentOffset = 0;
       for (var j = 0; j < paragraphWords.length; j++) {
-        //deletePercent / 100
-        if (Math.random() < deletePercent / 100) {
-          if (j > 0 && j < paragraphWords.length - 1) {
-            //AddHiddenWord(newContent[i].key, currentOffset, paragraphWords[j]);
+        if (HideConditions(j, paragraphWords)) {
+          //AddHiddenWord(newContent[i].key, currentOffset, paragraphWords[j]);
 
-            //add the word to the array of hidden words
-            actualHiddenWords.push(paragraphWords[j]);
+          actualHiddenWords.push(paragraphWords[j]);
 
-            paragraphWords[j] = " ".repeat(paragraphWords[j].length);
+          paragraphWords[j] = " ".repeat(paragraphWords[j].length);
 
-            var wordLength = paragraphWords[j].length;
-            newContent[i].inlineStyleRanges.push({
-              offset: currentOffset,
-              length: wordLength,
-              style: "UNDERSCORES",
-            });
+          var wordLength = paragraphWords[j].length;
+          newContent[i].inlineStyleRanges.push({
+            offset: currentOffset,
+            length: wordLength,
+            style: "UNDERSCORES",
+          });
 
-            backupContent[i].inlineStyleRanges.push({
-              offset: currentOffset,
-              length: wordLength,
-              style: "UNDERSCORES",
-            });
-          }
+          backupContent[i].inlineStyleRanges.push({
+            offset: currentOffset,
+            length: wordLength,
+            style: "UNDERSCORES",
+          });
         }
 
         currentOffset += paragraphWords[j].length + 1;

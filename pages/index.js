@@ -14,6 +14,8 @@ import RestoreContentButton from "/components/RestoreContentButton";
 import CompareButton from "/components/CompareButton";
 import DropdownMenu from "/components/DropdownMenu";
 
+import PopUpMessage from "/components/PopUpMessage";
+
 import dynamic from "next/dynamic";
 
 const RTETextEditor = dynamic(() => import("/components/RTETextEditor"), {
@@ -53,7 +55,11 @@ function Home() {
 
   const [deletePercent, setDeletePercent] = useState(45);
   const [updateText, setUpdateText] = useState(false);
-
+  const [popUpMessageContent, setPopUpMessageContent] = useState({
+    text: "",
+    type: "positive",
+    forceUpdate: 0,
+  });
   const [showHiddenContent, setShowHiddenContent] = useState(false);
 
   const [hideOptions, setHideOptions] = useState([
@@ -74,8 +80,23 @@ function Home() {
   }
 
   function UpdateSavedContent() {
+    if (content !== savedContent) {
+      setPopUpMessageContent({
+        text: "Contenido guardado",
+        type: "positive",
+        forceUpdate: popUpMessageContent.forceUpdate + 1,
+      });
+    } else {
+      setPopUpMessageContent({
+        text: "El contenido es el mismo que el guardado",
+        type: "warning",
+        forceUpdate: popUpMessageContent.forceUpdate + 1,
+      });
+    }
+
     setSavedContent(content);
-    console.log("saved content updated");
+
+    console.log(popUpMessageContent);
   }
 
   function RestoreSavedContent() {
@@ -89,6 +110,12 @@ function Home() {
     }
 
     setHiddenContent({ blocks: [], entityMap: {} });
+
+    setPopUpMessageContent({
+      text: "Contenido restaurado",
+      type: "positive",
+      forceUpdate: popUpMessageContent.forceUpdate + 1,
+    });
   }
 
   function ClearContent() {
@@ -190,6 +217,8 @@ function Home() {
       </main>
 
       <ScrollToTopButton />
+
+      <PopUpMessage {...{ popUpMessageContent }} />
     </div>
   );
 }

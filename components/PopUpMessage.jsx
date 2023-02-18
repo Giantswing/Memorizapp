@@ -4,11 +4,14 @@ function PopUpMessage(props) {
   const [showPopUp, setShowPopUp] = useState(false);
 
   useEffect(() => {
-    if (props.popUpMessageContent.text !== "") setShowPopUp(true);
-
-    setTimeout(() => {
-      setShowPopUp(false);
-    }, 3500);
+    let timeoutId;
+    if (props.popUpMessageContent.text !== "") {
+      setShowPopUp(true);
+      timeoutId = setTimeout(() => {
+        setShowPopUp(false);
+      }, 5000);
+    }
+    return () => clearTimeout(timeoutId);
   }, [props.popUpMessageContent.forceUpdate]);
 
   return (

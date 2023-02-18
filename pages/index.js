@@ -94,9 +94,56 @@ function Home() {
       });
     }
 
-    setSavedContent(content);
+    if (
+      content != "" &&
+      content.blocks.length != 0 &&
+      content.blocks[0].text != ""
+    ) {
+      //check text to see if there are underscores
+      var thereAreGaps = false;
+
+      for (let i = 0; i < content.blocks.length; i++) {
+        const underscoreRegex = / /g;
+        const underscoreMatch = content.blocks[i].text.match(underscoreRegex);
+        if (underscoreMatch != null) {
+          thereAreGaps = true;
+        }
+      }
+
+      if (!thereAreGaps) {
+        for (let i = 0; i < content.blocks.length; i++) {
+          //draft js, remove inline styles only if the style is called UNDERSCORES
+          content.blocks[i].inlineStyleRanges = content.blocks[
+            i
+          ].inlineStyleRanges.filter((style) => style.style != "UNDERSCORES");
+        }
+
+        setHiddenContent({ blocks: [], entityMap: {} });
+        setSavedContent(content);
+        CallbackUpdateText();
+      } else {
+        setPopUpMessageContent({
+          text: "El texto contiene espacios sin rellenar, restaura o rellénalos primero",
+          type: "negative",
+          forceUpdate: popUpMessageContent.forceUpdate + 1,
+        });
+      }
+    } else {
+      setPopUpMessageContent({
+        text: "No hay contenido para guardar",
+        type: "negative",
+        forceUpdate: popUpMessageContent.forceUpdate + 1,
+      });
+    }
 
     console.log(popUpMessageContent);
+  }
+
+  function RemoveUnderscoreStyle() {
+    //GO THROUGH THE CONTENT AND REMOVE UNDERSCORES INLINE STYLING
+    var contentWithoutUnderscores = JSON.parse(JSON.stringify(content));
+
+    contentWithoutUnderscores.inlineStyleRanges = [];
   }
 
   function RestoreSavedContent() {
@@ -127,8 +174,17 @@ function Home() {
   function CompareContent() {
     //toggle show hidden words
 
-    if (hiddenContent.blocks.length != 0) {
+    if (
+      hiddenContent.blocks.length != 0 &&
+      hiddenContent.blocks[0].text != ""
+    ) {
       setShowHiddenContent(!showHiddenContent);
+    } else {
+      setPopUpMessageContent({
+        text: "No hay palabras ocultas para mostrar",
+        type: "negative",
+        forceUpdate: popUpMessageContent.forceUpdate + 1,
+      });
     }
   }
 

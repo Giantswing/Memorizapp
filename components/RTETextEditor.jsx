@@ -238,28 +238,6 @@ const RTEditor = ({
   function PrintEditor() {
     return (
       <>
-        {/*}
-        <div
-          className={`RichEditor-editor--floating RichEditor-editor ${
-            showHiddenContent ? "RichEditor-editor--editing" : ""
-          }  `}
-        >
-          {showHiddenContent && (
-            <Editor
-              ref={hiddenEditorRef}
-              editorState={hiddenEditorState}
-              placeholder="Escribe el tema que quieres memorizar..."
-              blockStyleFn={(block) => getBlockStyle(block)}
-              keyBindingFn={(e) => mapKeyToEditorCommand(e)}
-              onChange={onChange}
-              spellCheck={true}
-              handleKeyCommand={handleKeyCommand}
-              customStyleMap={hiddenStyleMap}
-            />
-          )}
-        </div>
-        */}
-
         <div
           className={`RichEditor-editor ${
             showHiddenContent ? "RichEditor-editor--editing" : ""
@@ -283,17 +261,6 @@ const RTEditor = ({
 
   return (
     <>
-      {/*
-      <HiddenWordsDisplay
-        editorState={editorState}
-        editorRef={editorRef}
-        content={content}
-        savedContent={savedContent}
-        showHiddenContent={showHiddenContent}
-      />
-
-    */}
-
       <div className="RichEditor-control-parent o-container o-container--fluid">
         <div className="o-container">
           <BlockStyleControls

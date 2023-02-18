@@ -26,7 +26,10 @@ function HideButton({
       hideCurrentWord = false;
 
     if (hideCurrentWord == true) {
-      if (hideOptions[1].value == false && paragraphWords[wordIndex].length < 3)
+      if (
+        hideOptions[1].value == false &&
+        paragraphWords[wordIndex].length <= 3
+      )
         hideCurrentWord = false;
     }
 

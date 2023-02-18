@@ -1,8 +1,26 @@
+@keyframes shake {
+  0% {
+    scale: 1;
+  }
+  25% {
+    scale: 1.2;
+  }
+  50% {
+    scale: 0.8;
+  }
+  75% {
+    scale: 1.2;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
 .c-popup-message {
   position: fixed;
   bottom: 5%;
   left: 50%;
-  transform: translateX(-50%);
+  translate: -50%, 0;
   text-align: center;
   padding: 3px 35px;
   border-radius: 25px;
@@ -14,19 +32,20 @@
   z-index: 50;
   @include popup-message;
   transition: all 0.2s ease-in-out;
+  transform-origin: center;
 
   &__text {
     padding-bottom: 5px;
   }
 
   &--visible {
-    transform: translate(-50%, 0);
+    translate: -50% 0;
     opacity: 1;
     visibility: visible;
   }
 
   &--hidden {
-    transform: translate(-50%, 20px);
+    translate: -50% 20px;
     opacity: 0;
     visibility: hidden;
   }
@@ -44,5 +63,10 @@
   &--warning {
     background-color: $warning-color;
     color: white;
+  }
+
+  &--shake {
+    animation: shake 0.5s ease-in-out;
+    transform-origin: 45% 25%;
   }
 }

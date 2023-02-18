@@ -70,7 +70,7 @@ function Home() {
     },
     {
       title: "hideShortWords",
-      description: "Ocultar palabras cortas (menos de 3 letras)",
+      description: "Ocultar palabras cortas (tres letras o menos)",
       value: false,
     },
   ]);
